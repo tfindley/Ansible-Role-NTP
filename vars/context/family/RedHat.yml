@@ -1,0 +1,11 @@
+chrony_service: "chronyd"
+chrony_config: "/etc/chrony.conf"
+chrony_keyfile: "/etc/chrony.keys"
+chrony_driftfile: "/var/lib/chrony/drift"
+chrony_hwclockfile: "/etc/adjtime"
+
+default_serverpool:
+- { type: "server", addr: "0.centos.pool.ntp.org", mode: "iburst" }
+- { type: "server", addr: "1.centos.pool.ntp.org", mode: "iburst" }
+- { type: "server", addr: "2.centos.pool.ntp.org", mode: "iburst" }
+- { type: "server", addr: "3.centos.pool.ntp.org", mode: "iburst" }

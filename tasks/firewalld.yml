@@ -1,0 +1,29 @@
+- name: Opening firewall port for NTP Server
+  block:
+
+  - name: FirewallD - Allow specific subnet network range
+    firewalld:
+      service: ntp
+      source: "{{ntp_allow}}"
+      permanent: yes
+      state: enabled
+    ignore_errors: True
+    when: ntp_allow is defined
+
+  - name: FirewallD - Allow all subnet ranges
+    firewalld:
+      service: ntp
+      permanent: yes
+      state: enabled
+    ignore_errors: True
+    when: ntp_allow is not defined
+
+  when: inventory_hostname in groups['ntp_server']
+
+
+- name: FirewallD - Ensure NTP server port is closed
+  firewalld:
+    service: ntp
+    state: disabled
+  ignore_errors: True
+  when: inventory_hostname not in groups['ntp_server']

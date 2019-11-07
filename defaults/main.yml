@@ -1,0 +1,8 @@
+---
+# defaults file for ntp
+#
+chrony_dumponexit: True
+chrony_rtcsync: True
+chrony_loglevel: "tracking measurements statistics"
+chrony_logfile: "/var/log/chrony"
+chrony_changeint: "0.5"

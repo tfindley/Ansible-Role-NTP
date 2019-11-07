@@ -1,0 +1,18 @@
+- name: Install packages
+  package:
+    name: chrony
+    state: present
+
+- name: Chrony - Copy Configuration files
+  template:
+    src: chrony.conf
+    dest: "{{ chrony_config }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: Chrony Restart
+
+- name: Chrony - Enable Service
+  service:
+    name: "{{chrony_service}}"
+    enabled: yes
