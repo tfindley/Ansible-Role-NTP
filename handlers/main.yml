@@ -4,3 +4,8 @@
   service:
     name: "{{chrony_service}}"
     state: restarted
+
+- name: FirewallD Restart Service
+  service:
+    name: firewalld
+    state: reloaded

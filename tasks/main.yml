@@ -1,9 +1,12 @@
 ---
 # tasks file for ntp::main
 
-- name: Gather facts from new server
+- name: Gather facts from server
   setup:
     filter: ansible_default_ipv4.address
+
+- name: Gather service facts from server
+  service_facts:
 
 # Context
 # -------
@@ -55,7 +58,12 @@
 # -------
 
 
-
+# Remove old NTPq packages - we don't need these any more with Chrony.
 - include: remove.yml
+
+# Install Chrony and configure
 - include: chrony.yml
+
+# Configure firewall to allow outbound Chrony connections for the server.
 - include: firewalld.yml
+  when: "'firewalld.service' in services"

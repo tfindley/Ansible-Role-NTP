@@ -1,6 +1,8 @@
+
+# If the system is a NTP server then we will add firewall rules.
 - name: Opening firewall port for NTP Server
   block:
-
+# Use this rule if the ntp_allow range has been defined.
   - name: FirewallD - Allow specific subnet network range
     firewalld:
       service: ntp
@@ -9,7 +11,9 @@
       state: enabled
     ignore_errors: True
     when: ntp_allow is defined
+    notify: FirewallD Restart Service
 
+# Use this rule if the ntp_allow range has not been defined.
   - name: FirewallD - Allow all subnet ranges
     firewalld:
       service: ntp
@@ -17,13 +21,15 @@
       state: enabled
     ignore_errors: True
     when: ntp_allow is not defined
+    notify: FirewallD Restart Service
 
   when: inventory_hostname in groups['ntp_server']
 
-
+# If the system is not an NTP server we ensure the port is closed. Remember that if you set a desired state (as above) you must un-set it afterwards.
 - name: FirewallD - Ensure NTP server port is closed
   firewalld:
     service: ntp
     state: disabled
   ignore_errors: True
   when: inventory_hostname not in groups['ntp_server']
+  notify: FirewallD Restart Service
