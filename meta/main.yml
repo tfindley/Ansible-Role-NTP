@@ -1,7 +1,7 @@
 galaxy_info:
-  author: your name
-  description: your description
-  company: your company (optional)
+  author: Tristan Findley
+  description: Chrony Client/Server role
+  company: TFindley (tfindley.co.uk)
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -38,6 +38,23 @@ galaxy_info:
   #   - 1.0
   #   - 7
   #   - 99.99
+
+platforms:
+  - name: CentOS
+    versions:
+    - 7
+    - 8
+  - name: Debian
+    - stretch
+    - buster
+  - name: EL
+    - 7
+    - 8
+  - name: Ubuntu
+    - xenial
+    - bionic
+    - cosmic
+    - cuttlefish
 
   galaxy_tags: []
     # List tags for your role here, one per line. A tag is a keyword that describes
