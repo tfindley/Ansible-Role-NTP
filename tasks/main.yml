@@ -41,16 +41,6 @@
   ignore_errors: true
 
 
-# This deals with host-specific variabiles. Store them in /var/host/___.yml
-- name: Load host specific variables file
-  include_vars: "{{ item }}"
-  with_first_found:
-    - "context/host/{{ ansible_default_ipv4.address }}.yml" # 10.0.0.10.yml
-    - "context/host/{{ ansible_hostname }}.yml" # pxe.yml
-    - "context/host/{{ inventory_hostname }}.yml" # pxe.yml
-  ignore_errors: true
-
-
 # We load these in blocks to that we dont have to copy every single varialbe into files with a higher specicity.
 # Remember:
 #   - Variables in more specific files completely overwrite variables loaded before it.

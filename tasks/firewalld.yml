@@ -33,3 +33,10 @@
   ignore_errors: True
   when: inventory_hostname not in groups['ntp_server']
   notify: FirewallD Restart Service
+
+
+- name: FirewallD - Start and Enable service
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
