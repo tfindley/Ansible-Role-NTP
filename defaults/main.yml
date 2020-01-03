@@ -1,6 +1,8 @@
 ---
 # defaults file for ntp
 #
+ntp_server: False
+
 chrony_dumponexit: True
 chrony_rtcsync: True
 chrony_loglevel: "tracking measurements statistics"
