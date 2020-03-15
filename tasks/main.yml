@@ -17,9 +17,6 @@
 #  - Distribution (i.e: RedHat Enterprise, CentOS, Ubuntu)
 #  - LSB name (i.e: Raspbian) - only applicable to Debian-based OS's, and primarily needed to support Raspbian on Raspberry Pi's as its the only place Raspbian is specified
 #  - Distribution-Version (i.e: Debian-10)
-#  - Hostname (as specificed in inventory file)
-#  - Hostname (as read by Ansible)
-#  - IP Address
 
 # Remember these are CASE SENSITIVE
 
@@ -27,7 +24,7 @@
 # This deals with family-specific variabiles. Store them in /var/family/___.yml
 - name: Load OS family specific variables file
   include_vars:
-    file: "context/family/{{ansible_os_family}}.yml" # RedHat.yml
+    file: "context/family/{{ ansible_os_family }}.yml" # RedHat.yml
   ignore_errors: true
 
 

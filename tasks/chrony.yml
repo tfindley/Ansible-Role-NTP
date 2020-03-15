@@ -5,7 +5,7 @@
 
 - name: Chrony - Copy Configuration files
   template:
-    src: chrony.conf
+    src: chrony.conf.j2
     dest: "{{ chrony_config }}"
     owner: root
     group: root
@@ -14,5 +14,5 @@
 
 - name: Chrony - Enable Service
   service:
-    name: "{{chrony_service}}"
+    name: "{{ chrony_service }}"
     enabled: yes

@@ -1,4 +1,3 @@
-
 # If the system is a NTP server then we will add firewall rules.
 - name: Opening firewall port for NTP Server
   block:
@@ -6,7 +5,7 @@
   - name: FirewallD - Allow specific subnet network range
     firewalld:
       service: ntp
-      source: "{{ntp_allow}}"
+      source: "{{ ntp_allow }}"
       permanent: yes
       state: enabled
     ignore_errors: True
@@ -33,7 +32,6 @@
   ignore_errors: True
   when: inventory_hostname not in groups['ntp_server']
   notify: FirewallD Restart Service
-
 
 - name: FirewallD - Start and Enable service
   service:

@@ -2,7 +2,7 @@
 # handlers file for ntp
 - name: Chrony Restart
   service:
-    name: "{{chrony_service}}"
+    name: "{{ chrony_service }}"
     state: restarted
 
 - name: FirewallD Restart Service
