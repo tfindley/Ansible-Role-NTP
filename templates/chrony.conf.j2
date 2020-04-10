@@ -74,7 +74,7 @@ dumponexit {{ chrony_dumponexit }}
 
 dumpdir /var/lib/chrony
 
-{% ntp_server == True %}
+{% if ntp_server == True %}
 # This directive lets 'chronyd' to serve time even if unsynchronised to any
 # NTP server.
 local stratum 10
