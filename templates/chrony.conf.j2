@@ -87,7 +87,7 @@ local stratum 10
 #allow 0/0 (allow access by any IPv4 node)
 #allow ::/0 (allow access by any IPv6 node)
 
-{% if (ntp_allow is defined) and ('ntp_server' in group_names) %}
+{% if (ntp_allow is defined) and (ntp_server == True) %}
 allow {{ ntp_allow }}
 {% endif %}
 
