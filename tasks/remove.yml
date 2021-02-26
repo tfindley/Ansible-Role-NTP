@@ -1,4 +1,0 @@
-- name: Remove legacy ntpq
-  package:
-    name: ntp
-    state: absent

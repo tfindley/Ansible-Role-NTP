@@ -1,12 +1,12 @@
 ---
 # tasks file for ntp::main
 
-- name: Gather facts from server
+- name: NTP.main - Gather facts from server
   setup:
     filter: ansible_default_ipv4.address
 
-- name: Gather service facts from server
-  service_facts:
+- name: NTP.main - Gather service facts from server
+  ansible.builtin.service_facts:
 
 # Context
 # -------
@@ -22,14 +22,14 @@
 
 
 # This deals with family-specific variabiles. Store them in /var/family/___.yml
-- name: Load OS family specific variables file
+- name: NTP.main - Load OS family specific variables file
   include_vars:
     file: "context/family/{{ ansible_os_family }}.yml" # RedHat.yml
   ignore_errors: true
 
 
 # This deals with os-specific variabiles. Store them in /var/os/___.yml
-- name: Load os specific variables file
+- name: NTP.main - Load os specific variables file
   include_vars: "{{ item }}"
   with_first_found:
     - "context/os/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml" # Debian-10.yml
@@ -46,11 +46,14 @@
 
 
 # Remove old NTPq packages - we don't need these any more with Chrony.
-- include: remove.yml
+- name: NTP.main - Handoff to PreFlight task
+  ansible.builtin.include_tasks: preflight.yml
 
 # Install Chrony and configure
-- include: chrony.yml
+- name: NTP.main - Handoff to Install task
+  ansible.builtin.include_tasks: install.yml
 
 # Configure firewall to allow outbound Chrony connections for the server.
-- include: firewalld.yml
+- name: NTP.main - Handoff to FirewallD task
+  ansible.builtin.include_tasks: firewalld.yml
   when: "'firewalld.service' in services"

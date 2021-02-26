@@ -3,7 +3,7 @@
   block:
 # Use this rule if the ntp_allow range has been defined.
   - name: FirewallD - Allow specific subnet network range
-    firewalld:
+    ansible.posix.firewalld:
       service: ntp
       source: "{{ ntp_allow }}"
       permanent: yes
@@ -14,7 +14,7 @@
 
 # Use this rule if the ntp_allow range has not been defined.
   - name: FirewallD - Allow all subnet ranges
-    firewalld:
+    ansible.posix.firewalld:
       service: ntp
       permanent: yes
       state: enabled
@@ -26,7 +26,7 @@
 
 # If the system is not an NTP server we ensure the port is closed. Remember that if you set a desired state (as above) you must un-set it afterwards.
 - name: FirewallD - Ensure NTP server port is closed
-  firewalld:
+  ansible.posix.firewalld:
     service: ntp
     state: disabled
   ignore_errors: True
@@ -34,7 +34,7 @@
   notify: FirewallD Restart Service
 
 - name: FirewallD - Start and Enable service
-  service:
+  ansible.builtin.service:
     name: firewalld
     state: started
     enabled: yes

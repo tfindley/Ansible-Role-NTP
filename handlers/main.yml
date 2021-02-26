@@ -1,11 +1,11 @@
 ---
 # handlers file for ntp
 - name: Chrony Restart
-  service:
+  ansible.builtin.service:
     name: "{{ chrony_service }}"
     state: restarted
 
 - name: FirewallD Restart Service
-  service:
+  ansible.builtin.service:
     name: firewalld
     state: reloaded

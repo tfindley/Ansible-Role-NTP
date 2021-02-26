@@ -9,3 +9,9 @@ default_serverpool:
 - { type: "server", addr: "1.centos.pool.ntp.org", mode: "iburst" }
 - { type: "server", addr: "2.centos.pool.ntp.org", mode: "iburst" }
 - { type: "server", addr: "3.centos.pool.ntp.org", mode: "iburst" }
+
+package_remove:
+  - ntp
+
+package_install:
+  - chrony

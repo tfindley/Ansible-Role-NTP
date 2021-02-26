@@ -1,10 +1,12 @@
 - name: Install packages
-  package:
-    name: chrony
+  ansible.builtin.package:
+    name: "{{ item }}"
     state: present
+    update_cache: True
+  with_items: "{{ package_install }}"
 
 - name: Chrony - Copy Configuration files
-  template:
+  ansible.builtin.template:
     src: chrony.conf.j2
     dest: "{{ chrony_config }}"
     owner: root
@@ -13,6 +15,6 @@
   notify: Chrony Restart
 
 - name: Chrony - Enable Service
-  service:
+  ansible.builtin.service:
     name: "{{ chrony_service }}"
     enabled: yes

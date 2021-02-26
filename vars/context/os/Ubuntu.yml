@@ -1,0 +1,8 @@
+chrony_service: "ntp"
+chrony_config: "/etc/ntp.conf"
+chrony_keyfile: "/etc/ntp.keys"
+chrony_driftfile: "/var/lib/ntp/drift"
+chrony_hwclockfile: "/etc/adjtime"
+
+package_install:
+  - ntp
