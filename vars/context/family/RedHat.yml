@@ -1,17 +1,17 @@
+chrony_user: "chrony"
+chrony_group: "chrony"
 chrony_service: "chronyd"
 chrony_config: "/etc/chrony.conf"
-chrony_keyfile: "/etc/chrony.keys"
-chrony_driftfile: "/var/lib/chrony/drift"
-chrony_hwclockfile: "/etc/adjtime"
-
-default_serverpool:
-- { type: "server", addr: "0.centos.pool.ntp.org", mode: "iburst" }
-- { type: "server", addr: "1.centos.pool.ntp.org", mode: "iburst" }
-- { type: "server", addr: "2.centos.pool.ntp.org", mode: "iburst" }
-- { type: "server", addr: "3.centos.pool.ntp.org", mode: "iburst" }
+chrony_default_pool:
+  - { type: "server", addr: "0.centos.pool.ntp.org", mode: "iburst" }
+  - { type: "server", addr: "1.centos.pool.ntp.org", mode: "iburst" }
+  - { type: "server", addr: "2.centos.pool.ntp.org", mode: "iburst" }
+  - { type: "server", addr: "3.centos.pool.ntp.org", mode: "iburst" }
+chrony_default_keyfile: "/etc/chrony.keys"
+chrony_default_driftfile: "/var/lib/chrony/drift"
+chrony_default_hwclockfile: "/etc/adjtime"
 
 package_remove:
   - ntp
-
 package_install:
   - chrony

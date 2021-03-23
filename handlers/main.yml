@@ -1,11 +1,54 @@
 ---
 # handlers file for ntp
-- name: Chrony Restart
+- name: Chrony - Enable
+  ansible.builtin.service:
+    name: "{{ chrony_service }}"
+    enabled: True
+
+- name: Chrony - Disable
+  ansible.builtin.service:
+    name: "{{ chrony_service }}"
+    enabled: False
+
+- name: Chrony - Start
+  ansible.builtin.service:
+    name: "{{ chrony_service }}"
+    state: started
+
+- name: Chrony - Stop
+  ansible.builtin.service:
+    name: "{{ chrony_service }}"
+    state: stopped
+
+- name: Chrony - Restart
   ansible.builtin.service:
     name: "{{ chrony_service }}"
     state: restarted
 
-- name: FirewallD Restart Service
+- name: "FirewallD - Start"
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+
+- name: "FirewallD - Stop"
+  ansible.builtin.service:
+    name: firewalld
+    state: stopped
+
+- name: "FirewallD - Restart"
+  ansible.builtin.service:
+    name: firewalld
+    state: restarted
+  become: True
+
+- name: "FirewallD - Reload"
   ansible.builtin.service:
     name: firewalld
     state: reloaded
+  become: True
+
+- name: "FirewallD - Enabled"
+  ansible.builtin.service:
+    name: firewalld
+    enabled: True
+  become: True

@@ -1,2 +1,4 @@
 ---
 # vars file for ntp
+chrony_default_pool:
+  - { type: "server", addr: "ntp1.torix.ca", mode: "iburst" }

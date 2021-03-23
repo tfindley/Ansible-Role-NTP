@@ -1,4 +1,4 @@
-- name: Remove legacy ntpq
+- name: Chrony.Preflight - Remove legacy ntpq
   ansible.builtin.package:
     name: "{{ item }}"
     state: absent
