@@ -1,0 +1,12 @@
+chrony_user: "ntp"
+chrony_group: "ntp"
+chrony_service: "ntp"
+chrony_config: "/etc/ntp.conf"
+chrony_default_pool:
+  - { type: "pool", addr: "2.debian.pool.ntp.org", mode: "offline iburst" }
+chrony_default_keyfile: "/etc/ntp.keys"
+chrony_default_driftfile: "/var/lib/ntp/drift"
+chrony_default_hwclockfile: "/etc/adjtime"
+
+package_install:
+  - ntp

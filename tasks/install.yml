@@ -1,0 +1,27 @@
+- name: Chrony.Install - Install packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: True
+  with_items: "{{ package_install }}"
+  notify: Chrony - Enable
+
+- name: Chrony.Install - Copy Configuration files
+  ansible.builtin.template:
+    src: chrony.conf.j2
+    dest: "{{ chrony_config }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: Chrony - Restart
+
+- name: Chrony.Install - Ensure Dump Directory is created
+  ansible.builtin.file:
+    path: "{{ chrony_dumpdir }}"
+    state: directory
+    owner: "{{ chrony_user }}"
+    group: "{{ chrony_group }}"
+    mode: 0755
+  when:
+    - chrony_dumponexit | bool
+    - chrony_dumpdir is defined

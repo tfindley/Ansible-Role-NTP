@@ -2,39 +2,40 @@
 - name: Opening firewall port for NTP Server
   block:
 # Use this rule if the ntp_allow range has been defined.
-  - name: FirewallD - Allow specific subnet network range
-    firewalld:
+  - name: Chrony.FirewallD - Allow specific subnet network range
+    ansible.posix.firewalld:
       service: ntp
-      source: "{{ ntp_allow }}"
+      source: "{{ item }}"
       permanent: yes
       state: enabled
     ignore_errors: True
-    when: ntp_allow is defined
-    notify: FirewallD Restart Service
+    loop: "{{ chrony_server.allow }}"
+    when: chrony_server.allow is defined
+    notify: FirewallD - Reload
 
 # Use this rule if the ntp_allow range has not been defined.
-  - name: FirewallD - Allow all subnet ranges
-    firewalld:
+  - name: Chrony.FirewallD - Allow all subnet ranges
+    ansible.posix.firewalld:
       service: ntp
       permanent: yes
       state: enabled
     ignore_errors: True
-    when: ntp_allow is not defined
-    notify: FirewallD Restart Service
+    when: chrony_server.allow is not defined
+    notify: FirewallD - Reload
 
-  when: inventory_hostname in groups['ntp_server']
+  when: chrony_server.enabled is defined and chrony_server.enabled | bool
 
 # If the system is not an NTP server we ensure the port is closed. Remember that if you set a desired state (as above) you must un-set it afterwards.
-- name: FirewallD - Ensure NTP server port is closed
-  firewalld:
+- name: Chrony.FirewallD - Ensure NTP server port is closed
+  ansible.posix.firewalld:
     service: ntp
     state: disabled
   ignore_errors: True
-  when: inventory_hostname not in groups['ntp_server']
-  notify: FirewallD Restart Service
+  when: chrony_server.enabled is not defined or not chrony_server.enabled | bool
+  notify: FirewallD - Reload
 
-- name: FirewallD - Start and Enable service
-  service:
-    name: firewalld
-    state: started
-    enabled: yes
+# - name: Chrony.FirewallD - Start and Enable service
+#   ansible.builtin.service:
+#     name: firewalld
+#     state: started
+#     enabled: yes

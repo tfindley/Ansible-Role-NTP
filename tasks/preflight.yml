@@ -1,0 +1,6 @@
+- name: Chrony.Preflight - Remove legacy ntpq
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ package_remove }}"
+  when: package_remove is defined and package_remove | length > 0
