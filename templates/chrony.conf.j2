@@ -21,7 +21,7 @@
 # server ntp1.torix.ca iburst
 # pool 2.debian.pool.ntp.org offline iburst
 
-{% for line in chrony_pool %}
+{% for line in service.chrony.serverpool %}
 {{ line.type }} {{ line.addr }} {{ line.mode }}
 {% endfor %}
 
@@ -71,7 +71,7 @@ local stratum {{ chrony_server.local_stratum }}
 #allow 0/0 (allow access by any IPv4 node)
 #allow ::/0 (allow access by any IPv6 node)
 
-{% if chrony_server.allow is defined and chrony_server.allow | length > 0 %} {% for item in chrony_server.allow %}
+{% if service.chrony.allow is defined and service.chrony.allow | length > 0 %} {% for item in service.chrony.allow %}
 allow {{ item }}
 {% endfor %} {% endif %}
 

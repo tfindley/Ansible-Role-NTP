@@ -20,20 +20,49 @@
 
     # chrony_pool:
     #   - { type: "server", addr: "ntp1.torix.ca", mode: "iburst" }
-    chrony_server:
-      enabled: True
-      allow:
+
+    # chrony_server:
+    #   enabled: True
+    #   allow:
+    #     - "10.0.0.0/24"
+    #   local_stratum: 10
+    # # chrony_keyfile:
+    # # chrony_driftfile:
+    # chrony_loglevel: "tracking measurements statistics"
+    # chrony_logfile: "/var/log/chrony"
+    # chrony_logchange: 0.5
+    # # chrony_mail:
+    # # chrony_mailchange:
+    # # chrony_hwclockfile:
+    # chrony_rtcsync: False
+    # chrony_maxupdateskew: "100.0"
+    # chrony_dumponexit: True
+    # chrony_dumpdir: /var/lib/chrony
+
+
+    service:
+      chrony:
+        allow: 
         - "10.0.0.0/24"
-      local_stratum: 10
-    # chrony_keyfile:
-    # chrony_driftfile:
-    chrony_loglevel: "tracking measurements statistics"
-    chrony_logfile: "/var/log/chrony"
-    chrony_logchange: 0.5
-    # chrony_mail:
-    # chrony_mailchange:
-    # chrony_hwclockfile:
-    chrony_rtcsync: False
-    chrony_maxupdateskew: "100.0"
-    chrony_dumponexit: True
-    chrony_dumpdir: /var/lib/chrony
+        local_stratum: 10
+        loglevel: "tracking measurements statistics"
+        logfile: "/var/log/chrony"
+        logchange: '0.5'
+        rtcsync: False
+        maxupdateskew: '100.0'
+        dumponexit: True
+        dumpdir: '/var/lib/chrony'
+        serverpool:
+        - addr: tick.usask.ca
+          mode: iburst
+          type: server
+        - addr: 68.69.221.61
+          mode: iburst
+          type: server
+        - addr: ntp1.torix.ca
+          mode: iburst
+          type: server
+
+    tags:
+      - service-bind9
+      - service-chrony

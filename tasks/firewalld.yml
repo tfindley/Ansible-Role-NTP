@@ -23,7 +23,7 @@
     when: chrony_server.allow is not defined
     notify: FirewallD - Reload
 
-  when: chrony_server.enabled is defined and chrony_server.enabled | bool
+  when: service.chrony is defined or '"service-chrony" in tags'
 
 # If the system is not an NTP server we ensure the port is closed. Remember that if you set a desired state (as above) you must un-set it afterwards.
 - name: Chrony.FirewallD - Ensure NTP server port is closed
@@ -31,7 +31,7 @@
     service: ntp
     state: disabled
   ignore_errors: True
-  when: chrony_server.enabled is not defined or not chrony_server.enabled | bool
+  when: service.chrony is not defined or '"service-chrony" not in tags'
   notify: FirewallD - Reload
 
 # - name: Chrony.FirewallD - Start and Enable service

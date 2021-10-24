@@ -2,19 +2,39 @@
 # defaults file for ntp
 #
 
-  chrony_pool: "{{ chrony_default_pool }}"
+  # chrony_pool: "{{ chrony_default_pool }}"
+  # chrony_server:
+  #   enabled: False
+  #   local_stratum: 10
+  # chrony_keyfile: "{{ chrony_default_keyfile | default(omit) }}"
+  # chrony_driftfile: "{{ chrony_default_driftfile | default(omit) }}"
+  # chrony_loglevel: "tracking measurements statistics"
+  # chrony_logfile: "/var/log/chrony" 
+  # chrony_logchange: "0.5"
+  # # chrony_mail:
+  # # chrony_mailchange: 
+  # chrony_hwclockfile: "{{ chrony_default_hwclockfile | default(omit) }}"
+  # chrony_rtcsync: False
+  # chrony_maxupdateskew: "100.0"
+  # chrony_dumponexit: True
+  # chrony_dumpdir: /var/lib/chrony
+
+
+
+
+  chrony_pool:          "{{ service.chrony.pool             | default(chrony_default_pool) }}"
   chrony_server:
     enabled: False
-    local_stratum: 10
-  chrony_keyfile: "{{ chrony_default_keyfile | default(omit) }}"
-  chrony_driftfile: "{{ chrony_default_driftfile | default(omit) }}"
-  chrony_loglevel: "tracking measurements statistics"
-  chrony_logfile: "/var/log/chrony" 
-  chrony_logchange: "0.5"
+    local_stratum:      "{{ service.chrony.local_stratum    | default('10') }}"
+  chrony_keyfile:       "{{ service.chrony.keyfile          | default(omit) }}"
+  chrony_driftfile:     "{{ service.chrony.driftfile        | default(omit) }}"
+  chrony_loglevel:      "{{ service.chrony.loglevel         | default('tracking measurements statistics') }}"
+  chrony_logfile:       "{{ service.chrony.logfile          | default('/var/log/chrony') }}"
+  chrony_logchange:     "{{ service.chrony.logchange        | default('0.5') }}"
   # chrony_mail:
   # chrony_mailchange: 
-  chrony_hwclockfile: "{{ chrony_default_hwclockfile | default(omit) }}"
-  chrony_rtcsync: False
-  chrony_maxupdateskew: "100.0"
-  chrony_dumponexit: True
-  chrony_dumpdir: /var/lib/chrony
+  chrony_hwclockfile:   "{{ service.chrony.hwclockfile      | default(omit) }}"
+  chrony_rtcsync:       "{{ service.chrony.rtcsync          | default(False) }}"
+  chrony_maxupdateskew: "{{ service.chrony.maxupdateskew    | default('100.0') }}"
+  chrony_dumponexit:    "{{ service.chrony.dumponexit       | default(True) }}"
+  chrony_dumpdir:       "{{ service.chrony.dumpdir          | default('/var/lib/chrony') }}"

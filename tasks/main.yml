@@ -8,6 +8,26 @@
 - name: Chrony.Main - Gather service facts from server
   ansible.builtin.service_facts:
 
+- name: Debug Datastructure present
+  debug:
+    msg: "service.chrony datastructure found"
+  when: service.chrony is defined
+
+- name: Debug Datastructure not present
+  debug:
+    msg: "service.chrony datastructure found"
+  when: service.chrony is not defined
+
+- name: Debug tags present
+  debug:
+    msg:  "service-chrony tag found"
+  when: '"service-chrony" in tags'
+  
+- name: Debug tags not present
+  debug:
+    msg:  "service-chrony tag not found"
+  when: '"service-chrony" not in tags'
+
 # Context
 # -------
 # The context section is used to load variables. This has been built in a specific order so that subsequent variable files override earlier variables.
