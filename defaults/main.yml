@@ -2,19 +2,19 @@
 # defaults file for ntp
 #
 
-  chrony_pool: "{{ chrony_default_pool }}"
-  chrony_server:
-    enabled: False
-    local_stratum: 10
-  chrony_keyfile: "{{ chrony_default_keyfile | default(omit) }}"
-  chrony_driftfile: "{{ chrony_default_driftfile | default(omit) }}"
-  chrony_loglevel: "tracking measurements statistics"
-  chrony_logfile: "/var/log/chrony" 
-  chrony_logchange: "0.5"
-  # chrony_mail:
-  # chrony_mailchange: 
-  chrony_hwclockfile: "{{ chrony_default_hwclockfile | default(omit) }}"
-  chrony_rtcsync: False
-  chrony_maxupdateskew: "100.0"
-  chrony_dumponexit: True
-  chrony_dumpdir: /var/lib/chrony
+chrony_pool: "{{ chrony_default_pool }}"
+chrony_server:
+  enabled: false
+  local_stratum: 10
+chrony_keyfile: "{{ chrony_default_keyfile | default(omit) }}"
+chrony_driftfile: "{{ chrony_default_driftfile | default(omit) }}"
+chrony_loglevel: "tracking measurements statistics"
+chrony_logfile: "/var/log/chrony"
+chrony_logchange: "0.5"
+# chrony_mail:
+# chrony_mailchange:
+chrony_hwclockfile: "{{ chrony_default_hwclockfile | default(omit) }}"
+chrony_rtcsync: false
+chrony_maxupdateskew: "100.0"
+chrony_dumponexit: true
+chrony_dumpdir: /var/lib/chrony
