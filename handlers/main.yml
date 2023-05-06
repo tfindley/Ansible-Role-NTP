@@ -3,12 +3,12 @@
 - name: Chrony - Enable
   ansible.builtin.service:
     name: "{{ chrony_service }}"
-    enabled: True
+    enabled: true
 
 - name: Chrony - Disable
   ansible.builtin.service:
     name: "{{ chrony_service }}"
-    enabled: False
+    enabled: false
 
 - name: Chrony - Start
   ansible.builtin.service:
@@ -39,16 +39,16 @@
   ansible.builtin.service:
     name: firewalld
     state: restarted
-  become: True
+  become: true
 
 - name: "FirewallD - Reload"
   ansible.builtin.service:
     name: firewalld
     state: reloaded
-  become: True
+  become: true
 
 - name: "FirewallD - Enabled"
   ansible.builtin.service:
     name: firewalld
-    enabled: True
-  become: True
+    enabled: true
+  become: true

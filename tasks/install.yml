@@ -2,7 +2,7 @@
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
-    update_cache: True
+    update_cache: true
   with_items: "{{ package_install }}"
   notify: Chrony - Enable
 
@@ -12,7 +12,7 @@
     dest: "{{ chrony_config }}"
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   notify: Chrony - Restart
 
 - name: Chrony.Install - Ensure Dump Directory is created
@@ -21,7 +21,7 @@
     state: directory
     owner: "{{ chrony_user }}"
     group: "{{ chrony_group }}"
-    mode: 0755
+    mode: '0755'
   when:
     - chrony_dumponexit | bool
     - chrony_dumpdir is defined

@@ -110,9 +110,9 @@ If this is not set then your NTP Server will not be addressible by NTP clients.
 
 ### Default variables:
 These can be set in your playbook. The defaults are as below.
-- chrony_dumponexit: (Default: True)
+- chrony_dumponexit: (Default: true)
 - chrony_dumpdir: 
-- chrony_rtcsync: (Default: True)
+- chrony_rtcsync: (Default: true)
 - chrony_loglevel: (Default: "tracking measurements statistics")
 - chrony_logfile: (Default: "/var/log/chrony")
 - chrony_changeint: (Default"0.5")

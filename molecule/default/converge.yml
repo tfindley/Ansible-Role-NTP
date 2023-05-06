@@ -3,10 +3,10 @@
   hosts: all
   tasks:
     - name: "Include ntp"
-      include_role:
+      ansible.builtin.include_role:
         name: "ntp"
   vars:
-    # ntp_server: True
+    # ntp_server: true
 
     # ntp_localserver:
     #   - { type: "server", addr: "10.0.0.11", mode: "iburst" }
@@ -21,7 +21,7 @@
     # chrony_pool:
     #   - { type: "server", addr: "ntp1.torix.ca", mode: "iburst" }
     chrony_server:
-      enabled: True
+      enabled: true
       allow:
         - "10.0.0.0/24"
       local_stratum: 10
@@ -33,7 +33,7 @@
     # chrony_mail:
     # chrony_mailchange:
     # chrony_hwclockfile:
-    chrony_rtcsync: False
+    chrony_rtcsync: false
     chrony_maxupdateskew: "100.0"
-    chrony_dumponexit: True
+    chrony_dumponexit: true
     chrony_dumpdir: /var/lib/chrony
