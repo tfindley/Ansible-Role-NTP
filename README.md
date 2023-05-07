@@ -119,8 +119,8 @@ These can be set in your playbook. The defaults are as below.
 - chrony_dumponexit: (Default: true)
 - chrony_dumpdir:
 - chrony_rtcsync: (Default: true)
-- chrony_loglevel: (Default: "tracking measurements statistics")
-- chrony_logfile: (Default: "/var/log/chrony")
+- logging_level: (Default: "tracking measurements statistics")
+- logging_path: (Default: "/var/log/chrony")
 - chrony_changeint: (Default"0.5")
 
 ### Fallbacks

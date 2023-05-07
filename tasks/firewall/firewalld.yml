@@ -1,6 +1,6 @@
 # If the system is a NTP server then we will add firewall rules.
 - name: Opening firewall port for NTP Server
-  when: chrony_server.enabled is defined and chrony_server.enabled | bool
+  when: server_enabled is defined and server_enabled | bool
   block:
 # Use this rule if the ntp_allow range has been defined.
     - name: Chrony.FirewallD - Allow specific subnet network range
@@ -9,8 +9,8 @@
         source: "{{ item }}"
         permanent: true
         state: enabled
-      loop: "{{ chrony_server.allow }}"
-      when: chrony_server.allow is defined
+      loop: "{{ firewall_allow }}"
+      when: firewall_allow is defined
       notify: FirewallD - Reload
 
 # Use this rule if the ntp_allow range has not been defined.
@@ -19,7 +19,7 @@
         service: ntp
         permanent: true
         state: enabled
-      when: chrony_server.allow is not defined
+      when: firewall_allow is not defined
       notify: FirewallD - Reload
 
 
@@ -28,7 +28,7 @@
   ansible.posix.firewalld:
     service: ntp
     state: disabled
-  when: chrony_server.enabled is not defined or not chrony_server.enabled | bool
+  when: server_enabled is not defined or not server_enabled | bool
   notify: FirewallD - Reload
 
 # - name: Chrony.FirewallD - Start and Enable service

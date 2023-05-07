@@ -1,0 +1,21 @@
+pool_default:
+  - addr: "ntp.ubuntu.com"
+    mode: "iburst"
+    type: "pool"
+    offline: false
+    maxsources: 4
+  - addr: "0.ubuntu.pool.ntp.org"
+    mode: "iburst"
+    type: "pool"
+    offline: false
+    maxsources: 1
+  - addr: "1.ubuntu.pool.ntp.org"
+    mode: "iburst"
+    type: "pool"
+    offline: false
+    maxsources: 1
+  - addr: "2.ubuntu.pool.ntp.org"
+    mode: "iburst"
+    type: "pool"
+    offline: false
+    maxsources: 2

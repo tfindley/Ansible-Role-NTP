@@ -1,0 +1,13 @@
+user_default: "chrony"
+group_default: "chrony"
+service_default: "chrony"
+configfile_default: "/etc/chrony/chrony.conf"
+keyfile_default: "/etc/chrony/chrony.keys"
+driftfle_default: "/var/lib/chrony/chrony.drift"
+hwclockfile_default: "/etc/adjtime"
+
+pool_default:
+  - addr: 2.debian.pool.ntp.org
+    type: pool
+    mode: iburst
+    offline: true

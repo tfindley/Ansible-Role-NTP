@@ -20,15 +20,14 @@
 #     and primarily needed to support Raspbian on Raspberry Pi's as its the only place Raspbian is specified
 #  - Distribution-Version (i.e: Debian-10)
 
-# Remember these are CASE SENSITIVE
+# Remember these are all lowercase
 
-# This deals with family-specific variabiles. Store them in /var/family/___.yml
-- name: Chrony.Main - Load OS family specific variables file
+- name: Chrony.Main - Load Distribution specific variables file
   ansible.builtin.include_vars:
     file: "{{ item }}"
   with_first_found:
     - files:
-        - "context/family/{{ ansible_os_family }}.yml" # RedHat.yml
+        - "context/{{ ansible_distribution | lower }}/main.yml" # RedHat, CentOS, Debian, Ubuntu, etc
       skip: true
 
 # This deals with os-specific variabiles. Store them in /var/os/___.yml
@@ -37,11 +36,9 @@
     file: "{{ item }}"
   with_first_found:
     - files:
-        - "context/os/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml" # Debian-10.yml
-        - "context/os/{{ ansible_lsb.id }}.yml" # Raspbian.yml
-        - "context/os/{{ ansible_distribution }}.yml" # RedHat.yml
+        - "context/{{ ansible_distribution | lower }}/{{ ansible_distribution_major_version | lower }}.yml" # centos/7.yml
+        - "context/{{ ansible_distribution | lower }}/{{ ansible_distribution_release | lower }}.yml" # debian/wheezy.yml
       skip: true
-
 
 # We load these in blocks to that we dont have to copy every single varialbe into files with a higher specicity.
 # Remember:

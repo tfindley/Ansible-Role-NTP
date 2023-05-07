@@ -1,9 +1,0 @@
-chrony_user: "chrony"
-chrony_group: "chrony"
-chrony_service: "chrony"
-chrony_config: "/etc/chrony/chrony.conf"
-chrony_default_pool:
-  - { type: "pool", addr: "2.debian.pool.ntp.org", mode: "offline iburst" }
-chrony_default_keyfile: "/etc/chrony/chrony.keys"
-chrony_default_driftfile: "/var/lib/chrony/chrony.drift"
-chrony_default_hwclockfile: "/etc/adjtime"

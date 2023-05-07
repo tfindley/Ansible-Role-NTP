@@ -6,22 +6,33 @@
   with_items: "{{ package_install }}"
   notify: Chrony - Enable
 
-- name: Chrony.Install - Copy Configuration files
+- name: Chrony.Install - Deploy Configuration file from template
   ansible.builtin.template:
     src: chrony.conf.j2
-    dest: "{{ chrony_config }}"
-    owner: root
-    group: root
+    dest: "{{ configfile }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
     mode: '0644'
+    backup: true
+  notify: Chrony - Restart
+
+- name: Chrony.Install - Deploy Keys file from template
+  ansible.builtin.template:
+    src: chrony.keys.j2
+    dest: "{{ keyfile }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0600'
+    backup: true
   notify: Chrony - Restart
 
 - name: Chrony.Install - Ensure Dump Directory is created
   ansible.builtin.file:
-    path: "{{ chrony_dumpdir }}"
+    path: "{{ dumponexit_path }}"
     state: directory
-    owner: "{{ chrony_user }}"
-    group: "{{ chrony_group }}"
-    mode: '0755'
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '0750'
   when:
-    - chrony_dumponexit | bool
-    - chrony_dumpdir is defined
+    - dumponexit_enabled | bool
+    - dumponexit_path is defined

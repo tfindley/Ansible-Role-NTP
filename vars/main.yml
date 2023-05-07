@@ -1,4 +1,19 @@
 ---
 # vars file for ntp
-chrony_default_pool:
+package_install:
+  - chrony
+
+pool_default:
   - { type: "server", addr: "ntp1.torix.ca", mode: "iburst" }
+
+local_stratrum_default: 10
+rtcsync_default: false
+maxupdateskew_default: "100.0"
+dumponexit_enabled_default: true
+dumponexit_path_default: "/var/lib/chrony"
+
+server_enabled_default: true
+logging_enabled_default: true
+logging_path_default: '/var/log/chrony'
+logging_level_default: "tracking measurements statistics"
+logging_change_default: "0.5"
