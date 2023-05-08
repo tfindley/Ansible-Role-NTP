@@ -2,27 +2,27 @@
 # handlers file for ntp
 - name: Chrony - Enable
   ansible.builtin.service:
-    name: "{{ chrony_service }}"
+    name: "{{ service }}"
     enabled: true
 
 - name: Chrony - Disable
   ansible.builtin.service:
-    name: "{{ chrony_service }}"
+    name: "{{ service }}"
     enabled: false
 
 - name: Chrony - Start
   ansible.builtin.service:
-    name: "{{ chrony_service }}"
+    name: "{{ service }}"
     state: started
 
 - name: Chrony - Stop
   ansible.builtin.service:
-    name: "{{ chrony_service }}"
+    name: "{{ service }}"
     state: stopped
 
 - name: Chrony - Restart
   ansible.builtin.service:
-    name: "{{ chrony_service }}"
+    name: "{{ service }}"
     state: restarted
 
 - name: "FirewallD - Start"

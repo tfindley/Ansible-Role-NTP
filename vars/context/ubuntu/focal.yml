@@ -1,0 +1,10 @@
+user_default: "_chrony"
+group_default: "_chrony"
+service_default: "chrony"
+configfile_default: "/etc/chrony/chrony.conf"
+keyfile_default: "/etc/chrony/chrony.keys"
+driftfle_default: "/var/lib/chrony/chrony.drift"
+hwclockfile_default: "/etc/adjtime"
+
+package_install:
+  - chrony

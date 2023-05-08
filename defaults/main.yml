@@ -2,19 +2,32 @@
 # defaults file for ntp
 #
 
-chrony_pool: "{{ chrony_default_pool }}"
-chrony_server:
-  enabled: false
-  local_stratum: 10
-chrony_keyfile: "{{ chrony_default_keyfile | default(omit) }}"
-chrony_driftfile: "{{ chrony_default_driftfile | default(omit) }}"
-chrony_loglevel: "tracking measurements statistics"
-chrony_logfile: "/var/log/chrony"
-chrony_logchange: "0.5"
-# chrony_mail:
-# chrony_mailchange:
-chrony_hwclockfile: "{{ chrony_default_hwclockfile | default(omit) }}"
-chrony_rtcsync: false
-chrony_maxupdateskew: "100.0"
-chrony_dumponexit: true
-chrony_dumpdir: /var/lib/chrony
+pool: "{{ chrony.pool | default(pool_default) }}"
+
+local_stratum: "{{ chrony.local_stratum | default(local_stratrum_default) }}"
+
+user: "{{ chrony.user | default(user_default) }}"
+group: "{{ chrony.group | default(group_default) }}"
+service: "{{ chrony.service | default(service_default) }}"
+configfile: "{{ chrony.configfile | default(configfile_default) }}"
+keyfile: "{{ chrony.keyfile | default(keyfile_default) }}"
+driftfile: "{{ chrony.driftfle | default(driftfle_default) }}"
+hwclockfile: "{{ chrony.hwclockfile | default(hwclockfile_default) }}"
+rtcsync: "{{ chrony.rtcsync | default(rtcsync_default) }}"
+maxupdateskew: "{{ chrony.maxupdateskew | default(maxupdateskew_default) }}"
+dumponexit_enabled: "{{ chrony.dumponexit.enabled | default(dumponexit_enabled_default) }}"
+dumponexit_path: "{{ chrony.dumponexit.path | default(dumponexit_path_default) }}"
+
+# -------
+server_enabled: "{{ chrony.server.enabled | default(none) }}"
+server_allow: "{{ chrony.server.allow | default(none) }}"
+server_firewall: "{{ chrony.server.firewall | default(open) }}"
+logging_enabled: "{{ chrony.logging.enabled | default(logging_enabled_default) }}"
+logging_path: "{{ chrony.logging.path | default(logging_path_default) }}"
+logging_level: "{{ chrony.logging.level | default(logging_level_default) }}"
+logging_change: "{{ chrony.logging.change | default(logging_change_default) }}"
+
+authkeys: "{{ chrony.authkeys | default(none) }}"
+
+firewall_enabled: "{{ chrony.firewall.enabled | default(true) }}"
+firewall_mode: "{{ chrony.firewall.mode | default('all') }}"

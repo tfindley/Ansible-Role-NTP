@@ -20,20 +20,19 @@
 
     # chrony_pool:
     #   - { type: "server", addr: "ntp1.torix.ca", mode: "iburst" }
-    chrony_server:
-      enabled: true
-      allow:
-        - "10.0.0.0/24"
-      local_stratum: 10
-    # chrony_keyfile:
-    # chrony_driftfile:
-    chrony_loglevel: "tracking measurements statistics"
-    chrony_logfile: "/var/log/chrony"
-    chrony_logchange: 0.5
+    server_enabled: true
+    firewall_allow:
+      - "10.0.0.0/24"
+    local_stratum: 10
+    # keyfile:
+    # driftfile:
+    logging_level: "tracking measurements statistics"
+    logging_path: "/var/log/chrony"
+    logging_change: 0.5
     # chrony_mail:
     # chrony_mailchange:
     # chrony_hwclockfile:
-    chrony_rtcsync: false
-    chrony_maxupdateskew: "100.0"
-    chrony_dumponexit: true
-    chrony_dumpdir: /var/lib/chrony
+    rtcsync: false
+    maxupdateskew: "100.0"
+    dumponexit_enabled: true
+    dumponexit_path: /var/lib/chrony

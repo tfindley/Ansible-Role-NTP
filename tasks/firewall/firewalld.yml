@@ -1,38 +1,45 @@
+---
 # If the system is a NTP server then we will add firewall rules.
-- name: Opening firewall port for NTP Server
-  when: chrony_server.enabled is defined and chrony_server.enabled | bool
-  block:
-# Use this rule if the ntp_allow range has been defined.
-    - name: Chrony.FirewallD - Allow specific subnet network range
-      ansible.posix.firewalld:
-        service: ntp
-        source: "{{ item }}"
-        permanent: true
-        state: enabled
-      loop: "{{ chrony_server.allow }}"
-      when: chrony_server.allow is defined
-      notify: FirewallD - Reload
+# - name: Opening firewall port for NTP Server
+#   when: server_enabled is defined and server_enabled | bool
+#   block:
+# # Use this rule if the ntp_allow range has been defined.
+#     - name: Chrony.Firewall.FirewallD - Allow specific subnet network range
+#       ansible.posix.firewalld:
+#         port: 123/udp
+#         source: "{{ item }}"
+#         permanent: true
+#         state: enabled
+#       loop: "{{ server_allow }}"
+#       when:
+#         - firewall_mode == 'allow'
+#         - server_allow is defined
+#         - server_allow | length > 0
+#       notify: FirewallD - Reload
 
-# Use this rule if the ntp_allow range has not been defined.
-    - name: Chrony.FirewallD - Allow all subnet ranges
-      ansible.posix.firewalld:
-        service: ntp
-        permanent: true
-        state: enabled
-      when: chrony_server.allow is not defined
-      notify: FirewallD - Reload
+# # Use this rule if the ntp_allow range has not been defined.
+#     - name: Chrony.Firewall.FirewallD - Allow all subnet ranges
+#       ansible.posix.firewalld:
+#         port: 123/udp
+#         permanent: true
+#         state: enabled
+#       when:
+#         - firewall_mode == 'all'
+#       notify: FirewallD - Reload
 
 
-# If the system is not an NTP server we ensure the port is closed. Remember that if you set a desired state (as above) you must un-set it afterwards.
-- name: Chrony.FirewallD - Ensure NTP server port is closed
+# # If the system is not an NTP server we ensure the port is closed. Remember that if you set a desired state (as above) you must un-set it afterwards.
+# - name: Chrony.Firewall.FirewallD - Ensure NTP server port is closed
+#   ansible.posix.firewalld:
+#     port: 123/udp
+#     state: disabled
+#   when:
+#     - server_enabled is not defined or not server_enabled | bool or firewall_mode == 'deny'
+#   notify: FirewallD - Reload
+
+- name: Chrony.Firewall.FirewallD - Allow all subnet ranges
   ansible.posix.firewalld:
-    service: ntp
-    state: disabled
-  when: chrony_server.enabled is not defined or not chrony_server.enabled | bool
+    port: 123/udp
+    permanent: true
+    state: enabled
   notify: FirewallD - Reload
-
-# - name: Chrony.FirewallD - Start and Enable service
-#   ansible.builtin.service:
-#     name: firewalld
-#     state: started
-#     enabled: true

@@ -1,0 +1,28 @@
+package_remove:
+  - ntp
+
+user_default: "chrony"
+group_default: "chrony"
+service_default: "chronyd"
+configfile_default: "/etc/chrony.conf"
+keyfile_default: "/etc/chrony.keys"
+driftfle_default: "/var/lib/chrony/drift"
+hwclockfile_default: "/etc/adjtime"
+
+pool_default:
+  - addr: "0.centos.pool.ntp.org"
+    mode: iburst
+    type: server
+    offline: false
+  - addr: "1.centos.pool.ntp.org"
+    mode: iburst
+    type: server
+    offline: false
+  - addr: "2.centos.pool.ntp.org"
+    mode: iburst
+    type: server
+    offline: false
+  - addr: "3.centos.pool.ntp.org"
+    mode: iburst
+    type: server
+    offline: false
