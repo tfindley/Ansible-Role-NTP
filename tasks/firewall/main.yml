@@ -1,0 +1,14 @@
+---
+# Configure firewall to allow outbound Chrony connections for the server.
+- name: Chrony.Firewall.Main - Hand off to FirewallD task
+  ansible.builtin.include_tasks: firewall/firewalld.yml
+  when: # Only execute this task if firewalld is detected as installed.
+    - "'firewalld.service' in services"
+    - ansible_facts.services['firewalld.service'].state == 'running'
+
+# Configure firewall to allow outbound Chrony connections for the server.
+- name: Chrony.Firewall.Main - Hand off to UFW task
+  ansible.builtin.include_tasks: firewall/ufw.yml
+  when: # Only execute this task if UFW is detected as installed.
+    - "'ufw' in services"
+    - ansible_facts.services['ufw'].state == 'running'

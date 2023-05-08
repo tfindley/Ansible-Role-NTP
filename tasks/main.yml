@@ -50,13 +50,12 @@
 - name: Chrony.Main - Handoff to PreFlight task
   ansible.builtin.include_tasks: preflight.yml
 
-# Install Chrony and configure
+# Install and configure
 - name: Chrony.Main - Handoff to Install task
   ansible.builtin.include_tasks: install.yml
 
-# Configure firewall to allow outbound Chrony connections for the server.
-- name: Chrony.Main - Hand off to FirewallD task
-  ansible.builtin.include_tasks: firewall/firewalld.yml
-  when: # Only execute this task if firewalld is deteted as installed.
-    - "'firewalld.service' in services"
-    - ansible_facts.services['firewalld.service'].state == 'running'
+# Configure system firewall
+- name: Chrony.Main - Handoff to Firewall task
+  ansible.builtin.include_tasks: firewall/main.yml
+  when:
+    - firewall_enabled

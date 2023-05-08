@@ -1,0 +1,38 @@
+---
+# If the system is a NTP server then we will add firewall rules.
+# - name: Opening firewall port for NTP Server
+#   when: server_enabled is defined and server_enabled | bool
+#   block:
+# # Use this rule if the ntp_allow range has been defined.
+#     - name: Chrony.Firewall.UFW - Allow specific subnet network range
+#       community.general.ufw:
+#         rule: allow
+#         port: ntp
+#         src: "{{ item }}"
+#       loop: "{{ server_allow }}"
+#       when:
+#         - firewall_mode == 'allow'
+#         - server_allow is defined
+#         - server_allow | length > 0
+
+# # Use this rule if the ntp_allow range has not been defined.
+#     - name: Chrony.Firewall.UFW - Allow all subnet ranges
+#       community.general.ufw:
+#         rule: allow
+#         port: ntp
+#       when:
+#         - firewall_mode == 'all'
+
+
+# # If the system is not an NTP server we ensure the port is closed. Remember that if you set a desired state (as above) you must un-set it afterwards.
+# - name: Chrony.Firewall.UFW - Ensure NTP server port is closed
+#   community.general.ufw:
+#     rule: deny
+#     port: ntp
+#   when:
+#     - server_enabled is not defined or not server_enabled | bool or firewall_mode == 'deny'
+
+  - name: Chrony.Firewall.UFW - Allow all subnet ranges
+    community.general.ufw:
+      rule: allow
+      port: ntp

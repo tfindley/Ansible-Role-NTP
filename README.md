@@ -17,7 +17,6 @@ This role has been tested successfully on:
 - Debian 10
 - CentOS 7
 - CentOS 8
-- Raspbian Buster
 
 During the setup the role will attempt to configure FirewallD to open/close port 151 outbound on servers and clients appropriatey. If FirewallD is not installed then this step will fail.
 
@@ -129,14 +128,33 @@ If the variable 'ntp_serverpool' is not set in your playbook, then the following
 
 #### Debian OS Family
 
-- { type: "pool", addr: "2.debian.pool.ntp.org", mode: "offline iburst" }
+```yml
+  - addr: 2.debian.pool.ntp.org
+    type: pool
+    mode: iburst
+    offline: true
+```
 
 #### RedHat OS Family
 
-- { type: "server", addr: "0.centos.pool.ntp.org", mode: "iburst" }
-- { type: "server", addr: "1.centos.pool.ntp.org", mode: "iburst" }
-- { type: "server", addr: "2.centos.pool.ntp.org", mode: "iburst" }
-- { type: "server", addr: "3.centos.pool.ntp.org", mode: "iburst" }
+```yml
+  - addr: "0.centos.pool.ntp.org"
+    mode: iburst
+    type: server
+    offline: false
+  - addr: "1.centos.pool.ntp.org"
+    mode: iburst
+    type: server
+    offline: false
+  - addr: "2.centos.pool.ntp.org"
+    mode: iburst
+    type: server
+    offline: false
+  - addr: "3.centos.pool.ntp.org"
+    mode: iburst
+    type: server
+    offline: false
+```
 
 ## Dependencies
 
@@ -144,21 +162,80 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 
 ## Example Playbook
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+This NTP playbook example shows a configuration for an upstream NTP server which may be communicating with a stratum 1 timesource (in this case, 3) and acting as a time source of truth itself for the local network. In this instance it is allows only two servers to communicate with it using the 'allow' list. These two servers act as relays for the rest of the network
 
 ```yml
 - hosts: linux
   become: yes
   gather_facts: true
   roles:
-    - role: '~/ansible/roles/ntp'
+    - role: 'ntp'
   vars:
-    ntp_localserver:
-    - { type: "server", addr: "192.168.1.8", mode: "iburst" }
-    - { type: "server", addr: "192.168.1.7", mode: "iburst" }
-    ntp_serverpool:
-    - { type: "server", addr: "ntp1.torix.ca", mode: "iburst" }
-    ntp_allow: "192.168.1.0/24"
+    chrony:
+      pool:
+        - addr: "tick.usask.ca"
+          mode: iburst
+          type: server
+        - addr: "68.69.221.61"
+          mode: iburst
+          type: server
+        - addr: "ntp1.torix.ca"
+          mode: iburst
+          type: server
+      server:
+        enabled: true
+        allow:
+          - '192.168.69.5/32'
+          - '192.168.69.6/32'
+      firewall:
+        enabled: true
+      authkeys:
+        - id: 05
+          hash: SHA1
+          key: 'HEX:DDE741FFD9D919222DFB832CFB31CA8A4C45C0422A3601788C8FE2847ECF22DBEFE554B76CCEE41BFEA39F3C95DA6A1F287F9DDA4892DA653E1DD547B9CDCBCD'
+        - id: 06
+          hash: SHA1
+          key: 'HEX:328DB77DAEFE7E2B6B4C035B690F4CE84C475DB6B82F2F8E28181734CBBA2CA5B5BC5534DB5E71614C2FAC6D592389E997229C48B38B5F705FB47EA42BFB720C'
+
+```
+
+The following playbook example shows a configuration where the server you're configuring will communicate with another Chrony server. In this instance, the target chrony server (located on 192.168.69.2) already has key ID 05 generated. We have to load that symetric key onto the new server and tell it to communicate with the existing chrony server identifying with key ID 5.
+
+```yml
+- hosts: linux
+  become: yes
+  gather_facts: true
+  roles:
+    - role: 'ntp'
+  vars:
+    chrony:
+      pool:
+        - addr: "192.168.69.2"
+          mode: iburst
+          type: server
+          offline: false
+          keyid: 05
+      server:
+        enabled: true
+        allow:
+          - '192.168.69.0/24'
+      firewall:
+        enabled: true
+      authkeys:
+        - id: 05
+          hash: SHA1
+          key: 'HEX:DDE741FFD9D919222DFB832CFB31CA8A4C45C0422A3601788C8FE2847ECF22DBEFE554B76CCEE41BFEA39F3C95DA6A1F287F9DDA4892DA653E1DD547B9CDCBCD'
+```
+
+## Keys
+
+### key Generation
+
+Run the following command to from a system with Chrony installed to generate a symetric key:
+
+```shell
+chronyc keygen 11 SHA1 512
+11 SHA1 HEX:DDE741FFD9D919222DFB832CFB31CA8A4C45C0422A3601788C8FE2847ECF22DBEFE554B76CCEE41BFEA39F3C95DA6A1F287F9DDA4892DA653E1DD547B9CDCBCD
 ```
 
 ## Roadmap

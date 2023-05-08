@@ -2,7 +2,7 @@
 # This the default chrony_conf file for the chrony package. 
 
 {% for line in pool  %}
-{{ line.type }} {{ line.addr }} {% if line.offline is defined and line.offline %}offline{% endif %} {{ line.mode }} {% if line.maxsources is defined %}maxsources {{ line.maxsources }}{% endif %}
+{{ line.type }} {{ line.addr }} {% if line.offline is defined and line.offline %}offline {% endif %}{{ line.mode }} {% if line.maxsources is defined %}maxsources {{ line.maxsources }}{% endif %}{% if line.keyid is defined %}key {{ line.keyid }}{% endif %}
 
 {% endfor %}
 

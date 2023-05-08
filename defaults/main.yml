@@ -21,12 +21,13 @@ dumponexit_path: "{{ chrony.dumponexit.path | default(dumponexit_path_default) }
 # -------
 server_enabled: "{{ chrony.server.enabled | default(none) }}"
 server_allow: "{{ chrony.server.allow | default(none) }}"
+server_firewall: "{{ chrony.server.firewall | default(open) }}"
 logging_enabled: "{{ chrony.logging.enabled | default(logging_enabled_default) }}"
 logging_path: "{{ chrony.logging.path | default(logging_path_default) }}"
 logging_level: "{{ chrony.logging.level | default(logging_level_default) }}"
 logging_change: "{{ chrony.logging.change | default(logging_change_default) }}"
 
-authkeys:
-  - id:
-    hash:
-    key:
+authkeys: "{{ chrony.authkeys | default(none) }}"
+
+firewall_enabled: "{{ chrony.firewall.enabled | default(true) }}"
+firewall_mode: "{{ chrony.firewall.mode | default('all') }}"
