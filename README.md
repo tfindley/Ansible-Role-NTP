@@ -1,5 +1,7 @@
 # NTP (Chrony)
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z016573P)
+
 A simple role for setting up Chrony as an NTP client or NTP server.
 
 ## Requirements
@@ -251,4 +253,6 @@ BSD
 
 ## Author Information
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z016573P)
+
+- [Tristan Findley](https://tfindley.co.uk)
