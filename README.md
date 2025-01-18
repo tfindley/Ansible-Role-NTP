@@ -247,12 +247,17 @@ chronyc keygen 11 SHA1 512
 - Support more Chrony configuration options.
 - Allow serverpools to be set at an inventory level instead of at a playbook level.
 
+## Support and Feature Requests
+
+Reach out to me through Github to request a feature or change, log an issue or request support. I'll do my best to help.
+
 ## License
 
 BSD
 
 ## Author Information
 
+This role was written by [Tristan Findley](https://tfindley.co.uk)
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z016573P)
 
-- [Tristan Findley](https://tfindley.co.uk)
